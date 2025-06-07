@@ -5,47 +5,107 @@
   <title>Lottery Winner Transfers</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #111;
-      color: #0f0;
+      font-family: 'Courier New', Courier, monospace;
+      background-color: #0c0c0c;
+      color: #00ff00;
       padding: 40px;
-      line-height: 1.6;
     }
+
     h1 {
-      color: #fff;
+      color: #ffffff;
       font-size: 2em;
     }
+
+    .live-tag {
+      display: inline-block;
+      background-color: red;
+      color: white;
+      padding: 4px 10px;
+      margin-left: 10px;
+      font-weight: bold;
+      border-radius: 6px;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 50%, 100% { opacity: 1; }
+      25%, 75% { opacity: 0; }
+    }
+
     .transfer {
-      background-color: #222;
-      border-left: 4px solid #0f0;
+      background-color: #1a1a1a;
+      border-left: 5px solid #00ff00;
       padding: 15px;
       margin: 20px 0;
+      transition: transform 0.2s;
     }
+
+    .transfer:hover {
+      transform: scale(1.02);
+    }
+
     .wallet {
-      color: #0ff;
+      color: #00ffff;
     }
+
     .amount {
       font-weight: bold;
-      color: #ff0;
+      color: #ffff00;
+    }
+
+    a {
+      text-decoration: none;
+      color: #00ffff;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .timestamp {
+      color: #888;
+      font-size: 0.9em;
+    }
+
+    .add-more {
+      color: #555;
+      font-size: 0.8em;
+      margin-top: 40px;
+      border-top: 1px dashed #444;
+      padding-top: 20px;
     }
   </style>
 </head>
 <body>
-  <h1>Lottery Winner Transfers</h1>
+  <h1>Lottery Winner Transfers <span class="live-tag">LIVE</span></h1>
 
   <div class="transfer">
-    <div><span class="wallet">Wallet:</span> 7kE1r...zWmB3</div>
-    <div><span class="amount">+2.5 SOL</span> — Jun 7, 2025</div>
+    <div><span class="wallet">Wallet:</span> <a href="https://solscan.io/account/7kE1rzWmB3" target="_blank">7kE1r...zWmB3</a></div>
+    <div><span class="amount">+2.5 SOL</span></div>
+    <div class="timestamp">June 7, 2025 – 12:32 PM</div>
   </div>
 
   <div class="transfer">
-    <div><span class="wallet">Wallet:</span> 4sPvN...TxH7K</div>
-    <div><span class="amount">+4.1 SOL</span> — Jun 6, 2025</div>
+    <div><span class="wallet">Wallet:</span> <a href="https://solscan.io/account/4sPvNTxH7K" target="_blank">4sPvN...TxH7K</a></div>
+    <div><span class="amount">+4.1 SOL</span></div>
+    <div class="timestamp">June 6, 2025 – 6:40 PM</div>
   </div>
 
   <div class="transfer">
-    <div><span class="wallet">Wallet:</span> Drn2y...Gq91T</div>
-    <div><span class="amount">+1.8 SOL</span> — Jun 5, 2025</div>
+    <div><span class="wallet">Wallet:</span> <a href="https://solscan.io/account/Drn2yGq91T" target="_blank">Drn2y...Gq91T</a></div>
+    <div><span class="amount">+1.8 SOL</span></div>
+    <div class="timestamp">June 5, 2025 – 3:11 PM</div>
+  </div>
+
+  <div class="add-more">
+    <!-- Copy and paste this block to add more -->
+    <!--
+    <div class="transfer">
+      <div><span class="wallet">Wallet:</span> <a href="https://solscan.io/account/ABC123XYZ" target="_blank">ABC12...XYZ</a></div>
+      <div><span class="amount">+X.X SOL</span></div>
+      <div class="timestamp">DATE – TIME</div>
+    </div>
+    -->
   </div>
 </body>
 </html>
