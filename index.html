@@ -2,82 +2,80 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Lottery Winner Transfers</title>
+  <title>LottySol – Lottery Transfers</title>
   <style>
     body {
-      font-family: 'Courier New', Courier, monospace;
-      background-color: #0c0c0c;
-      color: #00ff00;
+      background-color: #0b0b0b;
+      color: #e2e2e2;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
       padding: 40px;
     }
 
+    header {
+      margin-bottom: 40px;
+    }
+
     h1 {
+      font-size: 2.2em;
       color: #ffffff;
-      font-size: 2em;
+      margin-bottom: 5px;
     }
 
-    .live-tag {
-      display: inline-block;
-      background-color: red;
-      color: white;
-      padding: 4px 10px;
-      margin-left: 10px;
-      font-weight: bold;
-      border-radius: 6px;
-      animation: blink 1s infinite;
-    }
-
-    @keyframes blink {
-      0%, 50%, 100% { opacity: 1; }
-      25%, 75% { opacity: 0; }
+    .subtitle {
+      color: #888888;
+      font-size: 1em;
     }
 
     .transfer {
-      background-color: #1a1a1a;
-      border-left: 5px solid #00ff00;
-      padding: 15px;
-      margin: 20px 0;
-      transition: transform 0.2s;
-    }
-
-    .transfer:hover {
-      transform: scale(1.02);
+      background-color: #141414;
+      border: 1px solid #222;
+      border-left: 4px solid #27c93f;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 6px;
     }
 
     .wallet {
-      color: #00ffff;
+      font-weight: bold;
+      color: #4dd0e1;
     }
 
     .amount {
       font-weight: bold;
-      color: #ffff00;
+      color: #ffd54f;
+    }
+
+    .timestamp {
+      font-size: 0.9em;
+      color: #888888;
+      margin-top: 5px;
     }
 
     a {
+      color: #4dd0e1;
       text-decoration: none;
-      color: #00ffff;
     }
 
     a:hover {
       text-decoration: underline;
     }
 
-    .timestamp {
-      color: #888;
-      font-size: 0.9em;
-    }
-
-    .add-more {
+    footer {
+      margin-top: 60px;
+      font-size: 0.85em;
       color: #555;
-      font-size: 0.8em;
-      margin-top: 40px;
-      border-top: 1px dashed #444;
+      border-top: 1px solid #1a1a1a;
       padding-top: 20px;
     }
   </style>
 </head>
 <body>
-  <h1>Lottery Winner Transfers <span class="live-tag">LIVE</span></h1>
+
+  <header>
+    <h1>LottySol Transfers</h1>
+    <div class="subtitle">Recent winner payouts on the Solana network</div>
+  </header>
 
   <div class="transfer">
     <div><span class="wallet">Wallet:</span> <a href="https://solscan.io/account/7kE1rzWmB3" target="_blank">7kE1r...zWmB3</a></div>
@@ -97,15 +95,9 @@
     <div class="timestamp">June 5, 2025 – 3:11 PM</div>
   </div>
 
-  <div class="add-more">
-    <!-- Copy and paste this block to add more -->
-    <!--
-    <div class="transfer">
-      <div><span class="wallet">Wallet:</span> <a href="https://solscan.io/account/ABC123XYZ" target="_blank">ABC12...XYZ</a></div>
-      <div><span class="amount">+X.X SOL</span></div>
-      <div class="timestamp">DATE – TIME</div>
-    </div>
-    -->
-  </div>
+  <footer>
+    © 2025 LottySol – Built on Solana. Manual transfer logs updated daily.
+  </footer>
+
 </body>
 </html>
