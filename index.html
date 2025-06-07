@@ -2,46 +2,99 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Wallet Transfer Display</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lotty</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap">
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f9;
-      color: #333;
-      padding: 40px;
-      max-width: 600px;
-      margin: auto;
-    }
-    h1 {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background-color: #0a0a0a;
+      color: white;
       text-align: center;
-      color: #2c3e50;
     }
-    .transfer {
-      background: white;
+
+    header {
       padding: 20px;
-      margin: 20px 0;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
-    .label {
-      font-weight: bold;
+
+    header img {
+      height: 80px;
+    }
+
+    nav {
+      margin: 30px 0;
+    }
+
+    nav a {
+      display: inline-block;
+      background-color: #1a1a1a;
+      color: white;
+      text-decoration: none;
+      padding: 12px 24px;
+      margin: 0 10px;
+      border-radius: 8px;
+      transition: background-color 0.3s;
+    }
+
+    nav a:hover {
+      background-color: #333;
+    }
+
+    .countdown-container {
+      margin-top: 60px;
+    }
+
+    .countdown-title {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    .timer {
+      font-size: 48px;
+      color: #00ff99;
+    }
+
+    footer {
+      margin-top: 100px;
+      padding: 20px;
+      font-size: 14px;
       color: #555;
+    }
+
+    .ticker {
+      margin-top: 30px;
+      color: #ffcc00;
+      font-size: 16px;
     }
   </style>
 </head>
 <body>
-  <h1>Fake Lottery Payouts</h1>
 
-  <div class="transfer">
-    <div><span class="label">From Wallet:</span> <span id="fromWallet">0x1234abcd5678ef90</span></div>
-    <div><span class="label">To Wallet:</span> <span id="toWallet">0x9f8e7d6c5b4a3210</span></div>
-    <div><span class="label">Amount:</span> <span id="amount">5 SOL</span></div>
-    <div><span class="label">Date:</span> <span id="date">June 7, 2025</span></div>
+  <header>
+    <img src="lotty-logo.png" alt="Lotty Logo" />
+  </header>
+
+  <nav>
+    <a href="buy.html">Buy Lotty</a>
+    <a href="live.html">View Live Draws</a>
+    <a href="how.html">How it Works</a>
+  </nav>
+
+  <div class="countdown-container">
+    <div class="countdown-title">Next Draw In:</div>
+    <div class="timer" id="timer">00:00</div>
   </div>
 
-  <p style="text-align:center; color: #888; font-size: 0.9em;">
-    * Manually update the wallet addresses, amount, and date inside the code.
-  </p>
+  <div class="ticker">Contract address coming soon</div>
+
+  <footer>
+    &copy; 2025 Lotty. All rights reserved.
+  </footer>
+
+  <script>
+    // Countdown logic placeholder (will implement later)
+    document.getElementById('timer').textContent = "00:00";
+  </script>
 </body>
 </html>
