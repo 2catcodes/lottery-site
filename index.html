@@ -13,25 +13,25 @@
     }
 
     header {
-      text-align: center;
-      padding: 40px 20px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      padding: 30px 20px 20px;
       border-bottom: 1px solid #1a1a1a;
     }
 
     header img {
-      height: 64px;
-      margin-bottom: 10px;
+      height: 48px;
     }
 
     h1 {
-      font-size: 2.4em;
-      margin: 10px 0 0;
+      font-size: 2.2em;
+      margin: 0;
     }
 
     #countdown {
-      color: #80cbc4;
-      font-size: 1.2em;
-      margin-top: 5px;
+      display: none; /* Timer on standby */
     }
 
     .container {
@@ -96,13 +96,17 @@
     }
 
     @media (max-width: 600px) {
-      .draw-numbers {
-        font-size: 1.2em;
-        text-align: center;
+      header {
+        flex-direction: column;
       }
 
       h1 {
-        font-size: 2em;
+        font-size: 1.8em;
+      }
+
+      .draw-numbers {
+        font-size: 1.2em;
+        text-align: center;
       }
     }
   </style>
@@ -112,7 +116,6 @@
   <header>
     <img src="lotty-logo.png" alt="Lotty Logo" />
     <h1>Lotty</h1>
-    <div id="countdown">Next draw in • calculating...</div>
   </header>
 
   <div class="container">
@@ -129,47 +132,4 @@
       <div class="transfer">
         <div class="wallet">Wallet: <a href="https://solscan.io/account/7kE1rzWmB3" target="_blank">7kE1r...zWmB3</a></div>
         <div class="amount">+2.5 SOL</div>
-        <div class="timestamp">June 7, 2025 – 12:32 PM</div>
-      </div>
-
-      <div class="transfer">
-        <div class="wallet">Wallet: <a href="https://solscan.io/account/4sPvNTxH7K" target="_blank">4sPvN...TxH7K</a></div>
-        <div class="amount">+4.1 SOL</div>
-        <div class="timestamp">June 6, 2025 – 6:40 PM</div>
-      </div>
-
-    </section>
-  </div>
-
-  <footer>
-    © 2025 Lotty. All rights reserved. Built on Solana.
-  </footer>
-
-  <script>
-    const countdownEl = document.getElementById('countdown');
-    const next = new Date();
-    next.setMinutes(0);
-    next.setSeconds(0);
-    next.setMilliseconds(0);
-    if (new Date().getMinutes() >= 45) {
-      next.setHours(next.getHours() + 1);
-    }
-
-    function updateCountdown() {
-      const now = new Date();
-      const diff = next - now;
-      if (diff <= 0) {
-        countdownEl.textContent = 'Drawing…';
-      } else {
-        const m = String(Math.floor(diff / 60000)).padStart(2, '0');
-        const s = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
-        countdownEl.textContent = `Next draw in • ${m}:${s}`;
-      }
-    }
-
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
-  </script>
-
-</body>
-</html>
+        <div class="timestamp">June 7, 2
