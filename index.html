@@ -2,65 +2,174 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>LottySol – Live Results & Transfers</title>
+  <title>Lotty – Live Solana Lottery</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    body { margin:0; font-family:Arial,sans-serif; background:#121212; color:#eee; }
-    header { background:#1f1f1f; padding:20px; text-align:center; }
-    h1 { margin:0; font-size:2.5em; }
-    #countdown { margin-top:10px; font-size:1.2em; color:#80cbc4; }
-    .container { padding:20px; max-width:800px; margin:auto; }
-    section { background:#1e1e1e; border:1px solid #333; border-radius:6px; padding:20px; margin-bottom:20px; }
-    .transfer { border-left:4px solid #81c784; padding-left:15px; margin-bottom:15px; }
-    .wallet a { color:#80deea; text-decoration:none; }
-    .wallet a:hover { text-decoration:underline; }
-    .amount { color:#ffd54f; font-weight:bold; }
-    .timestamp { color:#aaa; font-size:0.9em; }
+    body {
+      margin: 0;
+      background-color: #0d0d0d;
+      color: #f5f5f5;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 20px 20px;
+      border-bottom: 1px solid #1a1a1a;
+    }
+
+    header img {
+      height: 64px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 2.4em;
+      margin: 10px 0 0;
+    }
+
+    #countdown {
+      color: #80cbc4;
+      font-size: 1.2em;
+      margin-top: 5px;
+    }
+
+    .container {
+      max-width: 850px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    section {
+      background: #161616;
+      border: 1px solid #2a2a2a;
+      padding: 25px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 1.6em;
+      border-bottom: 1px solid #2a2a2a;
+      padding-bottom: 10px;
+    }
+
+    .draw-numbers {
+      font-size: 1.4em;
+      letter-spacing: 0.2em;
+      margin: 15px 0;
+    }
+
+    .transfer {
+      margin-top: 20px;
+      padding-left: 15px;
+      border-left: 4px solid #27c93f;
+    }
+
+    .wallet a {
+      color: #4dd0e1;
+      text-decoration: none;
+    }
+
+    .wallet a:hover {
+      text-decoration: underline;
+    }
+
+    .amount {
+      color: #ffd54f;
+      font-weight: bold;
+      margin-top: 5px;
+    }
+
+    .timestamp {
+      font-size: 0.9em;
+      color: #999;
+      margin-top: 3px;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.85em;
+      color: #555;
+      padding: 30px 0;
+    }
+
+    @media (max-width: 600px) {
+      .draw-numbers {
+        font-size: 1.2em;
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 2em;
+      }
+    }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>LottySol</h1>
-    <div id="countdown">Next draw in • calculating…</div>
+    <img src="lotty-logo.png" alt="Lotty Logo" />
+    <h1>Lotty</h1>
+    <div id="countdown">Next draw in • calculating...</div>
   </header>
 
   <div class="container">
 
     <section>
-      <h2>Recent Draw Results</h2>
-      <div id="results">5 • 12 • 23 • 34 • 45 + 10</div>
+      <h2>Recent Draw</h2>
+      <div class="draw-numbers">08 • 12 • 27 • 33 • 44 + 02</div>
+      <div class="timestamp">Drawn on June 7, 2025 @ 12:00 PM</div>
     </section>
 
     <section>
-      <h2>Live Transfers</h2>
+      <h2>Winner Transfers</h2>
 
       <div class="transfer">
-        <div class="wallet">
-          Wallet: <a href="https://solscan.io/account/7kE1rzWmB3" target="_blank">7kE1r...zWmB3</a>
-        </div>
+        <div class="wallet">Wallet: <a href="https://solscan.io/account/7kE1rzWmB3" target="_blank">7kE1r...zWmB3</a></div>
         <div class="amount">+2.5 SOL</div>
-        <div class="timestamp">June 7, 2025 – 12:32 PM</div>
+        <div class="timestamp">June 7, 2025 – 12:32 PM</div>
       </div>
 
-      <!-- More transfers here -->
-    </section>
+      <div class="transfer">
+        <div class="wallet">Wallet: <a href="https://solscan.io/account/4sPvNTxH7K" target="_blank">4sPvN...TxH7K</a></div>
+        <div class="amount">+4.1 SOL</div>
+        <div class="timestamp">June 6, 2025 – 6:40 PM</div>
+      </div>
 
+    </section>
   </div>
+
+  <footer>
+    © 2025 Lotty. All rights reserved. Built on Solana.
+  </footer>
 
   <script>
     const countdownEl = document.getElementById('countdown');
-    const next = new Date(); next.setHours(next.getHours() + 1); next.setMinutes(0);
-    function tick() {
-      const diff = next - new Date();
-      if (diff <= 0) { countdownEl.textContent = 'Drawing…'; }
-      else {
+    const next = new Date();
+    next.setMinutes(0);
+    next.setSeconds(0);
+    next.setMilliseconds(0);
+    if (new Date().getMinutes() >= 45) {
+      next.setHours(next.getHours() + 1);
+    }
+
+    function updateCountdown() {
+      const now = new Date();
+      const diff = next - now;
+      if (diff <= 0) {
+        countdownEl.textContent = 'Drawing…';
+      } else {
         const m = String(Math.floor(diff / 60000)).padStart(2, '0');
         const s = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
         countdownEl.textContent = `Next draw in • ${m}:${s}`;
       }
     }
-    setInterval(tick, 1000);
-    tick();
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
   </script>
+
 </body>
 </html>
