@@ -1,21 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Lottery Transfers</title>
+  <meta charset="UTF-8">
+  <title>Lottery Winner Transfers</title>
   <style>
-    body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 20px; }
-    h1 { color: #333; }
-    ul { background: white; padding: 15px; border-radius: 8px; max-width: 400px; }
-    li { margin-bottom: 10px; }
-    .wallet { font-weight: bold; }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: #0f0;
+      padding: 40px;
+      line-height: 1.6;
+    }
+    h1 {
+      color: #fff;
+      font-size: 2em;
+    }
+    .transfer {
+      background-color: #222;
+      border-left: 4px solid #0f0;
+      padding: 15px;
+      margin: 20px 0;
+    }
+    .wallet {
+      color: #0ff;
+    }
+    .amount {
+      font-weight: bold;
+      color: #ff0;
+    }
   </style>
 </head>
 <body>
   <h1>Lottery Winner Transfers</h1>
-  <ul>
-    <li><span class="wallet">From:</span> 0x123...abc &rarr; <span class="wallet">To:</span> 0x789...xyz — <strong>100 SOL</strong></li>
-    <li><span class="wallet">From:</span> 0x456...def &rarr; <span class="wallet">To:</span> 0x555...bbb — <strong>50 SOL</strong></li>
-  </ul>
+
+  <div class="transfer">
+    <div><span class="wallet">Wallet:</span> 7kE1r...zWmB3</div>
+    <div><span class="amount">+2.5 SOL</span> — Jun 7, 2025</div>
+  </div>
+
+  <div class="transfer">
+    <div><span class="wallet">Wallet:</span> 4sPvN...TxH7K</div>
+    <div><span class="amount">+4.1 SOL</span> — Jun 6, 2025</div>
+  </div>
+
+  <div class="transfer">
+    <div><span class="wallet">Wallet:</span> Drn2y...Gq91T</div>
+    <div><span class="amount">+1.8 SOL</span> — Jun 5, 2025</div>
+  </div>
 </body>
 </html>
