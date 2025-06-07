@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Lotty Solana Lottery</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lotty - Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     body {
       margin: 0;
@@ -11,8 +11,10 @@
       color: #f5f5f5;
       font-family: 'Segoe UI', sans-serif;
       text-align: center;
+      position: relative;
+      min-height: 100vh;
+      padding-bottom: 40px; /* space for ticker */
     }
-
     header {
       padding: 30px 20px 10px;
       border-bottom: 1px solid #1a1a1a;
@@ -20,13 +22,11 @@
       flex-direction: column;
       align-items: center;
     }
-
     header img {
-      width: 180px; /* bigger logo */
+      width: 180px;
       margin-bottom: 15px;
       cursor: pointer;
     }
-
     nav {
       display: flex;
       gap: 30px;
@@ -34,7 +34,6 @@
       width: 100%;
       max-width: 500px;
     }
-
     nav a {
       color: #f5f5f5;
       font-weight: 600;
@@ -43,25 +42,80 @@
       cursor: pointer;
       transition: color 0.3s ease;
     }
-
     nav a:hover {
       color: #27c93f;
     }
-
     main {
-      max-width: 850px;
+      max-width: 600px;
       margin: 40px auto;
       padding: 0 20px;
-      font-size: 1.2em;
-      line-height: 1.6;
     }
-
+    h1 {
+      font-weight: 700;
+      font-size: 2.8em;
+      margin-bottom: 15px;
+      color: #27c93f;
+    }
+    p.lead {
+      font-size: 1.3em;
+      margin-bottom: 40px;
+      color: #bbb;
+    }
+    .btn {
+      background-color: #27c93f;
+      color: #0d0d0d;
+      font-weight: 700;
+      font-size: 1.2em;
+      padding: 15px 40px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: background-color 0.3s ease;
+      margin: 0 10px;
+    }
+    .btn:hover {
+      background-color: #1f9b2f;
+    }
     footer {
       text-align: center;
       font-size: 0.85em;
       color: #555;
       padding: 30px 0;
       margin-top: 50px;
+    }
+
+    /* Ticker styles */
+    .ticker-wrapper {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: #222;
+      height: 30px;
+      overflow: hidden;
+      border-top: 1px solid #27c93f;
+      display: flex;
+      align-items: center;
+      z-index: 1000;
+    }
+    .ticker {
+      white-space: nowrap;
+      display: inline-block;
+      padding-left: 100%;
+      animation: ticker-scroll 15s linear infinite;
+      font-weight: 600;
+      color: #27c93f;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 1.1em;
+    }
+    @keyframes ticker-scroll {
+      0% {
+        transform: translateX(0%);
+      }
+      100% {
+        transform: translateX(-100%);
+      }
     }
 
     @media (max-width: 600px) {
@@ -73,6 +127,13 @@
         margin-bottom: 12px;
       }
       main {
+        font-size: 1em;
+      }
+      h1 {
+        font-size: 2.2em;
+      }
+      .btn {
+        padding: 12px 30px;
         font-size: 1em;
       }
     }
@@ -93,13 +154,19 @@
 
   <main>
     <h1>Welcome to Lotty</h1>
-    <p>Your decentralized lottery on the Solana blockchain. Transparent, fair, and exciting — all on-chain.</p>
-    <p>Watch recent transfers and winners here in real-time.</p>
+    <p class="lead">A decentralized lottery platform powered by Solana blockchain. Transparency and fairness guaranteed.</p>
+
+    <a href="buy.html" class="btn">Buy Lotty Token</a>
+    <a href="live.html" class="btn">View Live Draws</a>
   </main>
 
   <footer>
     © 2025 Lotty. All rights reserved. Powered by Solana.
   </footer>
+
+  <div class="ticker-wrapper" aria-label="Important notice ticker">
+    <div class="ticker">Contract address coming soon</div>
+  </div>
 
 </body>
 </html>
