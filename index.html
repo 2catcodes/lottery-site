@@ -13,20 +13,18 @@
     }
 
     header {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 15px;
+      text-align: center;
       padding: 30px 20px 10px;
       border-bottom: 1px solid #1a1a1a;
     }
 
     header img {
-      height: 48px;
+      height: 60px;
+      margin-bottom: 10px;
     }
 
     h1 {
-      font-size: 2.2em;
+      font-size: 2.4em;
       margin: 0;
     }
 
@@ -67,13 +65,9 @@
       border-left: 4px solid #27c93f;
     }
 
-    .wallet a {
+    .wallet {
       color: #4dd0e1;
-      text-decoration: none;
-    }
-
-    .wallet a:hover {
-      text-decoration: underline;
+      font-weight: 500;
     }
 
     .amount {
@@ -96,10 +90,6 @@
     }
 
     @media (max-width: 600px) {
-      header {
-        flex-direction: column;
-      }
-
       h1 {
         font-size: 1.8em;
       }
@@ -114,7 +104,7 @@
   </header>
 
   <div id="countdown">
-    Next Draw: 00:00
+    Next Draw: <span id="time">00:00</span>
   </div>
 
   <div class="container">
@@ -122,13 +112,13 @@
       <h2>Winner Transfers</h2>
 
       <div class="transfer">
-        <div class="wallet">Wallet: <a href="https://solscan.io/account/7kE1rzWmB3" target="_blank">7kE1r...zWmB3</a></div>
+        <div class="wallet">Wallet: Winner</div>
         <div class="amount">+2.5 SOL</div>
         <div class="timestamp">June 7, 2025 – 12:32 PM</div>
       </div>
 
       <div class="transfer">
-        <div class="wallet">Wallet: <a href="https://solscan.io/account/4sPvNTxH7K" target="_blank">4sPvN...TxH7K</a></div>
+        <div class="wallet">Wallet: Winner</div>
         <div class="amount">+4.1 SOL</div>
         <div class="timestamp">June 6, 2025 – 6:40 PM</div>
       </div>
@@ -139,6 +129,42 @@
   <footer>
     © 2025 Lotty. All rights reserved. Powered by Solana.
   </footer>
+
+  <script>
+    function getNextQuarterHour() {
+      const now = new Date();
+      const minutes = now.getMinutes();
+      const nextInterval = Math.ceil(minutes / 15) * 15;
+      if (nextInterval === 60) {
+        now.setHours(now.getHours() + 1);
+        now.setMinutes(0);
+      } else {
+        now.setMinutes(nextInterval);
+      }
+      now.setSeconds(0);
+      now.setMilliseconds(0);
+      return now;
+    }
+
+    function updateCountdown() {
+      const now = new Date();
+      const nextDraw = getNextQuarterHour();
+      const diff = nextDraw - now;
+
+      if (diff <= 0) {
+        document.getElementById("time").textContent = "00:00";
+        return;
+      }
+
+      const minutes = Math.floor((diff / 1000 / 60) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+      document.getElementById("time").textContent = 
+        `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
 
 </body>
 </html>
