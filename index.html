@@ -3,98 +3,67 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Lotty</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap">
+  <title>Lotty – On-Chain Lottery</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
-      font-family: 'Orbitron', sans-serif;
-      background-color: #0a0a0a;
+      font-family: 'DM Sans', sans-serif;
+      background-color: #0e0e0e;
       color: white;
       text-align: center;
     }
-
     header {
       padding: 20px;
     }
-
-    header img {
-      height: 80px;
-    }
-
     nav {
-      margin: 30px 0;
+      margin: 20px 0;
     }
-
     nav a {
-      display: inline-block;
-      background-color: #1a1a1a;
-      color: white;
-      text-decoration: none;
-      padding: 12px 24px;
       margin: 0 10px;
+      padding: 10px 20px;
+      color: white;
+      background: #4b33e0;
       border-radius: 8px;
-      transition: background-color 0.3s;
+      text-decoration: none;
     }
-
-    nav a:hover {
-      background-color: #333;
-    }
-
-    .countdown-container {
-      margin-top: 60px;
-    }
-
-    .countdown-title {
-      font-size: 28px;
-      margin-bottom: 20px;
-    }
-
     .timer {
-      font-size: 48px;
-      color: #00ff99;
+      font-size: 64px;
+      margin: 40px 0;
     }
-
-    footer {
-      margin-top: 100px;
-      padding: 20px;
-      font-size: 14px;
-      color: #555;
-    }
-
     .ticker {
-      margin-top: 30px;
-      color: #ffcc00;
-      font-size: 16px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: #111;
+      color: #fff;
+      padding: 10px;
+      font-size: 14px;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .ticker span {
+      display: inline-block;
+      animation: scroll 15s linear infinite;
+    }
+    @keyframes scroll {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
     }
   </style>
 </head>
 <body>
-
   <header>
-    <img src="lotty-logo.png" alt="Lotty Logo" />
+    <img src="lotty-logo.png" alt="Lotty Logo" width="120" />
+    <nav>
+      <a href="buy.html">Buy Lotty</a>
+      <a href="live.html">View Live Draws</a>
+      <a href="how.html">How It Works</a>
+    </nav>
   </header>
 
-  <nav>
-    <a href="buy.html">Buy Lotty</a>
-    <a href="live.html">View Live Draws</a>
-    <a href="how.html">How it Works</a>
-  </nav>
+  <div class="timer">00:00</div>
 
-  <div class="countdown-container">
-    <div class="countdown-title">Next Draw In:</div>
-    <div class="timer" id="timer">00:00</div>
-  </div>
-
-  <div class="ticker">Contract address coming soon</div>
-
-  <footer>
-    &copy; 2025 Lotty. All rights reserved.
-  </footer>
-
-  <script>
-    // Countdown logic placeholder (will implement later)
-    document.getElementById('timer').textContent = "00:00";
-  </script>
+  <div class="ticker"><span>🎟 Contract address coming soon 🎟</span></div>
 </body>
 </html>
