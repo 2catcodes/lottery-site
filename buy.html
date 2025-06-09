@@ -9,20 +9,17 @@
     body {
       margin: 0;
       font-family: 'DM Sans', sans-serif;
-      background-color: #0e0e0e;
+      background-color: #000000;
       color: white;
       text-align: center;
     }
     header { padding: 20px; }
-    nav {
-      margin: 20px 0;
-    }
     nav a {
       margin: 0 10px;
       padding: 10px 20px;
-      color: white;
       background: #4b33e0;
       border-radius: 8px;
+      color: white;
       text-decoration: none;
     }
     .ticker {
@@ -39,6 +36,15 @@
     .ticker span {
       display: inline-block;
       animation: scroll 15s linear infinite;
+    }
+    .back-home {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 10px 20px;
+      background: #333;
+      border-radius: 8px;
+      color: white;
+      text-decoration: none;
     }
     @keyframes scroll {
       0% { transform: translateX(100%); }
@@ -57,7 +63,9 @@
   </header>
 
   <h1>Buy $LOTTY</h1>
-  <p>Coming soon — Lotty will be available on Solana DEXs.</p>
+  <p>Coming soon: Buy directly via Jupiter aggregator or Raydium links here.</p>
+
+  <a class="back-home" href="index.html">← Back to Home</a>
 
   <div class="ticker"><span>🎟 Contract address coming soon 🎟</span></div>
 </body>
