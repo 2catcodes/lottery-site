@@ -3,26 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Live Draws – Lotty</title>
+  <title>Live Draws</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       font-family: 'DM Sans', sans-serif;
-      background-color: #0e0e0e;
+      background-color: #000000;
       color: white;
       text-align: center;
     }
     header { padding: 20px; }
-    nav {
-      margin: 20px 0;
-    }
     nav a {
       margin: 0 10px;
       padding: 10px 20px;
-      color: white;
       background: #4b33e0;
       border-radius: 8px;
+      color: white;
       text-decoration: none;
     }
     .ticker {
@@ -39,6 +36,15 @@
     .ticker span {
       display: inline-block;
       animation: scroll 15s linear infinite;
+    }
+    .back-home {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 10px 20px;
+      background: #333;
+      border-radius: 8px;
+      color: white;
+      text-decoration: none;
     }
     @keyframes scroll {
       0% { transform: translateX(100%); }
@@ -57,7 +63,9 @@
   </header>
 
   <h1>Live Draws</h1>
-  <p>All transactions are on-chain. View winners directly on Solscan soon.</p>
+  <p>All draws happen on-chain. Solscan integration coming soon.</p>
+
+  <a class="back-home" href="index.html">← Back to Home</a>
 
   <div class="ticker"><span>🎟 Contract address coming soon 🎟</span></div>
 </body>
