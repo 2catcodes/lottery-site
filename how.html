@@ -2,133 +2,73 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>How It Works – Lotty Solana Lottery</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>How It Works – Lotty</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
-      background-color: #0d0d0d;
-      color: #f5f5f5;
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'DM Sans', sans-serif;
+      background-color: #0e0e0e;
+      color: white;
+      text-align: center;
     }
-
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 20px 30px;
-      border-bottom: 1px solid #1a1a1a;
+    header { padding: 20px; }
+    nav {
+      margin: 20px 0;
     }
-
-    header img {
-      height: 50px;
-      cursor: pointer;
-    }
-
     nav a {
-      color: #f5f5f5;
-      margin-left: 25px;
-      font-weight: 600;
+      margin: 0 10px;
+      padding: 10px 20px;
+      color: white;
+      background: #4b33e0;
+      border-radius: 8px;
       text-decoration: none;
-      font-size: 1.1em;
-      cursor: pointer;
-      transition: color 0.3s ease;
     }
-
-    nav a:hover {
-      color: #27c93f;
+    .content {
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 0 20px;
     }
-
-    .container {
-      max-width: 850px;
-      margin: auto;
-      padding: 40px 20px;
+    .ticker {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: #111;
+      color: #fff;
+      padding: 10px;
+      font-size: 14px;
+      overflow: hidden;
+      white-space: nowrap;
     }
-
-    h1 {
-      text-align: center;
-      font-size: 2.5em;
-      margin-bottom: 25px;
+    .ticker span {
+      display: inline-block;
+      animation: scroll 15s linear infinite;
     }
-
-    p {
-      font-size: 1.1em;
-      line-height: 1.6;
-      margin-bottom: 20px;
-    }
-
-    ul {
-      margin-left: 20px;
-      margin-bottom: 30px;
-    }
-
-    li {
-      margin-bottom: 12px;
-    }
-
-    .home-link {
-      display: block;
-      text-align: center;
-      margin-top: 40px;
-      font-size: 1em;
-      color: #27c93f;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    .home-link:hover {
-      text-decoration: underline;
-    }
-
-    footer {
-      text-align: center;
-      font-size: 0.85em;
-      color: #555;
-      padding: 30px 0;
-    }
-
-    @media (max-width: 600px) {
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      nav {
-        margin-top: 10px;
-      }
+    @keyframes scroll {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
     }
   </style>
 </head>
 <body>
-
   <header>
-    <a href="index.html">
-      <img src="lotty-logo.png" alt="Lotty Logo" />
-    </a>
+    <img src="lotty-logo.png" alt="Lotty Logo" width="120" />
     <nav>
       <a href="buy.html">Buy Lotty</a>
+      <a href="live.html">View Live Draws</a>
       <a href="how.html">How It Works</a>
     </nav>
   </header>
 
-  <div class="container">
-    <h1>How Lotty Lottery Works</h1>
-    <p>Lotty is a decentralized lottery running fully on the Solana blockchain, designed for fairness, transparency, and community participation.</p>
-
-    <ul>
-      <li><strong>Ticket Purchase:</strong> Players buy Lotty tokens which give them entry into the lottery pool.</li>
-      <li><strong>Draw Schedule:</strong> Every 15 minutes, a winner is selected at random from all participants holding tokens.</li>
-      <li><strong>Claim Window:</strong> Winners have 1 minute to claim their prize, or the pot is burned to maintain fairness.</li>
-      <li><strong>Stake to Rig It:</strong> Players can stake tokens to boost their odds of winning — but the system is designed so the lottery remains unpredictable.</li>
-      <li><strong>Transparency:</strong> All transfers and draws are recorded on-chain, so anyone can verify fairness.</li>
-    </ul>
-
-    <p>Lotty combines blockchain innovation with fun and excitement — join the game and see if luck is on your side!</p>
-
-    <a class="home-link" href="index.html">← Back to Home</a>
+  <div class="content">
+    <h1>How Lotty Works</h1>
+    <p>🎟 Hold $LOTTY to participate.</p>
+    <p>🕒 Every 15 minutes, a wallet is selected at random.</p>
+    <p>⚠️ They must claim their prize within 60 seconds or the pot is burned.</p>
+    <p>🧬 All logic is verified on-chain, no human interference.</p>
   </div>
 
-  <footer>
-    © 2025 Lotty. All rights reserved. Powered by Solana.
-  </footer>
-
+  <div class="ticker"><span>🎟 Contract address coming soon 🎟</span></div>
 </body>
 </html>
