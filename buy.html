@@ -2,132 +2,63 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Buy Lotty – Solana Lottery</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Buy Lotty</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
-      background-color: #0d0d0d;
-      color: #f5f5f5;
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'DM Sans', sans-serif;
+      background-color: #0e0e0e;
+      color: white;
+      text-align: center;
     }
-
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 20px 30px;
-      border-bottom: 1px solid #1a1a1a;
+    header { padding: 20px; }
+    nav {
+      margin: 20px 0;
     }
-
-    header img {
-      height: 50px;
-      cursor: pointer;
-    }
-
     nav a {
-      color: #f5f5f5;
-      margin-left: 25px;
-      font-weight: 600;
+      margin: 0 10px;
+      padding: 10px 20px;
+      color: white;
+      background: #4b33e0;
+      border-radius: 8px;
       text-decoration: none;
-      font-size: 1.1em;
-      cursor: pointer;
-      transition: color 0.3s ease;
     }
-
-    nav a:hover {
-      color: #27c93f;
+    .ticker {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: #111;
+      color: #fff;
+      padding: 10px;
+      font-size: 14px;
+      overflow: hidden;
+      white-space: nowrap;
     }
-
-    .container {
-      max-width: 850px;
-      margin: auto;
-      padding: 40px 20px;
+    .ticker span {
+      display: inline-block;
+      animation: scroll 15s linear infinite;
     }
-
-    h1 {
-      text-align: center;
-      font-size: 2.5em;
-      margin-bottom: 25px;
-    }
-
-    p {
-      font-size: 1.1em;
-      line-height: 1.6;
-      margin-bottom: 20px;
-    }
-
-    ul {
-      margin-left: 20px;
-      margin-bottom: 30px;
-    }
-
-    li {
-      margin-bottom: 10px;
-    }
-
-    .home-link {
-      display: block;
-      text-align: center;
-      margin-top: 40px;
-      font-size: 1em;
-      color: #27c93f;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    .home-link:hover {
-      text-decoration: underline;
-    }
-
-    footer {
-      text-align: center;
-      font-size: 0.85em;
-      color: #555;
-      padding: 30px 0;
-    }
-
-    @media (max-width: 600px) {
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      nav {
-        margin-top: 10px;
-      }
+    @keyframes scroll {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
     }
   </style>
 </head>
 <body>
-
   <header>
-    <a href="index.html">
-      <img src="lotty-logo.png" alt="Lotty Logo" />
-    </a>
+    <img src="lotty-logo.png" alt="Lotty Logo" width="120" />
     <nav>
       <a href="buy.html">Buy Lotty</a>
+      <a href="live.html">View Live Draws</a>
       <a href="how.html">How It Works</a>
     </nav>
   </header>
 
-  <div class="container">
-    <h1>How to Buy Lotty Token</h1>
-    <p>Buying Lotty tokens is easy and can be done securely on the Solana blockchain. Follow these steps to get started:</p>
-    <ul>
-      <li><strong>Step 1:</strong> Set up a Solana wallet such as Phantom or Solflare.</li>
-      <li><strong>Step 2:</strong> Fund your wallet with SOL from an exchange or other wallet.</li>
-      <li><strong>Step 3:</strong> Connect your wallet to a trusted decentralized exchange (DEX) like Raydium or Orca.</li>
-      <li><strong>Step 4:</strong> Search for the Lotty token by its contract address (ask us for the address or find it on our official channels).</li>
-      <li><strong>Step 5:</strong> Swap your SOL for Lotty tokens and enjoy participating in the lottery!</li>
-    </ul>
+  <h1>Buy $LOTTY</h1>
+  <p>Coming soon — Lotty will be available on Solana DEXs.</p>
 
-    <p>If you have any questions, feel free to reach out on our official social channels or support page.</p>
-
-    <a class="home-link" href="index.html">← Back to Home</a>
-  </div>
-
-  <footer>
-    © 2025 Lotty. All rights reserved. Powered by Solana.
-  </footer>
-
+  <div class="ticker"><span>🎟 Contract address coming soon 🎟</span></div>
 </body>
 </html>
