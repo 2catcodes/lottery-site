@@ -4,28 +4,40 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>How It Works</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
+      background-color: #000;
+      color: #fff;
+      font-family: 'Orbitron', sans-serif;
       margin: 0;
-      font-family: 'DM Sans', sans-serif;
-      background-color: #000000;
-      color: white;
+      padding: 0;
       text-align: center;
     }
-    header { padding: 20px; }
-    nav a {
-      margin: 0 10px;
-      padding: 10px 20px;
-      background: #4b33e0;
-      border-radius: 8px;
-      color: white;
+    header, footer {
+      background-color: #111;
+      padding: 10px 0;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    nav a, #connectButton {
+      color: #0ff;
+      text-decoration: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .back-home {
+      display: block;
+      margin-top: 20px;
+      color: #0ff;
       text-decoration: none;
     }
-    .content {
-      max-width: 700px;
-      margin: 40px auto;
-      padding: 0 20px;
+    #walletAddress {
+      color: #0f0;
     }
     .ticker {
       position: fixed;
@@ -35,48 +47,64 @@
       color: #fff;
       padding: 10px;
       font-size: 14px;
-      overflow: hidden;
       white-space: nowrap;
+      overflow: hidden;
     }
     .ticker span {
       display: inline-block;
-      animation: scroll 15s linear infinite;
-    }
-    .back-home {
-      display: inline-block;
-      margin-top: 30px;
-      padding: 10px 20px;
-      background: #333;
-      border-radius: 8px;
-      color: white;
-      text-decoration: none;
+      padding-left: 100%;
+      animation: scroll 10s linear infinite;
     }
     @keyframes scroll {
-      0% { transform: translateX(100%); }
+      0% { transform: translateX(0); }
       100% { transform: translateX(-100%); }
     }
   </style>
 </head>
 <body>
   <header>
-    <img src="lotty-logo.png" alt="Lotty Logo" width="120" />
     <nav>
-      <a href="buy.html">Buy Lotty</a>
+      <a href="index.html">Home</a>
+      <a href="buy.html">Buy $LOTTY</a>
       <a href="live.html">View Live Draws</a>
       <a href="how.html">How It Works</a>
+      <span id="connectButton">Connect Wallet</span>
     </nav>
   </header>
 
-  <div class="content">
-    <h1>How Lotty Works</h1>
+  <main>
+    <h1>How It Works</h1>
     <p>🎟 Hold $LOTTY to participate.</p>
     <p>🕒 Every 30 minutes, one wallet is randomly selected.</p>
     <p>⚠️ If not claimed before the next drawing cycle, the pot is burned.</p>
     <p>🧬 100% on-chain. No middlemen. No ticket needed.</p>
-  </div>
+    <a class="back-home" href="index.html">← Back to Home</a>
+    <p id="walletAddress"></p>
+  </main>
 
-  <a class="back-home" href="index.html">← Back to Home</a>
+  <footer class="ticker">
+    <span>Contract address coming soon</span>
+  </footer>
 
-  <div class="ticker"><span>🎟 Contract address coming soon 🎟</span></div>
+  <script>
+    const connectButton = document.getElementById("connectButton");
+    const walletAddress = document.getElementById("walletAddress");
+
+    async function connectWallet() {
+      try {
+        const resp = await window.solana.connect();
+        const pubKey = resp.publicKey.toString();
+        walletAddress.textContent = "Connected: " + pubKey.slice(0, 4) + "..." + pubKey.slice(-4);
+      } catch (err) {
+        console.error("Wallet connection error:", err);
+      }
+    }
+
+    connectButton.addEventListener("click", connectWallet);
+
+    window.solana?.on("connect", () => {
+      console.log("Wallet connected!");
+    });
+  </script>
 </body>
 </html>
