@@ -14,25 +14,30 @@
       padding: 0;
       text-align: center;
     }
+
     header, footer {
       background-color: #111;
       padding: 10px 0;
     }
+
     nav {
       display: flex;
       justify-content: center;
       gap: 20px;
       margin-bottom: 20px;
     }
+
     nav a, #connectButton {
       color: #0ff;
       text-decoration: none;
       font-weight: bold;
       cursor: pointer;
     }
+
     #walletAddress {
       color: #0f0;
     }
+
     .ticker {
       position: fixed;
       bottom: 0;
@@ -44,14 +49,42 @@
       white-space: nowrap;
       overflow: hidden;
     }
+
     .ticker span {
       display: inline-block;
       padding-left: 100%;
       animation: scroll 10s linear infinite;
     }
+
     @keyframes scroll {
       0% { transform: translateX(0); }
       100% { transform: translateX(-100%); }
+    }
+
+    /* Twitter X Button */
+    #twitter-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #000;
+      border: 2px solid #0ff;
+      border-radius: 50%;
+      padding: 10px;
+      color: #0ff;
+      text-decoration: none;
+      box-shadow: 0 0 12px #0ff66c44;
+      z-index: 999;
+      transition: transform 0.2s ease;
+    }
+
+    #twitter-btn:hover {
+      transform: scale(1.1);
+      background-color: #0ff;
+      color: #000;
+    }
+
+    #twitter-btn svg {
+      display: block;
     }
   </style>
 </head>
@@ -68,13 +101,20 @@
 
   <main>
     <h1>🎟 Welcome to LOTTY</h1>
-    <p>Lotty is the first win or burn lottery token on Solana. Either you win and claim, or no one does.</p>
+    <p>Connect your wallet to participate in the next on-chain drawing.</p>
     <p id="walletAddress"></p>
   </main>
 
   <footer class="ticker">
     <span>Contract address coming soon</span>
   </footer>
+
+  <!-- Twitter "X" Button -->
+  <a href="https://twitter.com/YOUR_HANDLE" target="_blank" id="twitter-btn" aria-label="Twitter">
+    <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28">
+      <path d="M14.64 10.79L22.38 2h-2.05l-6.45 7.35L8.24 2H2.25l8.19 11.56L2.25 22h2.05l6.89-7.85L15.76 22h5.99l-8.11-11.21z"/>
+    </svg>
+  </a>
 
   <script>
     const connectButton = document.getElementById("connectButton");
