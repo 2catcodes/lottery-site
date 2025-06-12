@@ -24,7 +24,7 @@
       gap: 20px;
       margin-bottom: 20px;
     }
-    nav a, #connectButton, #refreshBalance {
+    nav a, #connectButton {
       color: #0ff;
       text-decoration: none;
       font-weight: bold;
@@ -38,31 +38,8 @@
     }
     #walletAddress {
       color: #0f0;
-      margin-bottom: 10px;
     }
-    #feeBalance {
-      margin: 10px 0;
-      font-weight: bold;
-    }
-    .draw-list {
-      max-width: 600px;
-      margin: 0 auto 30px auto;
-      text-align: left;
-    }
-    .draw-item {
-      background: #111;
-      margin: 8px 0;
-      padding: 12px;
-      border-radius: 5px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .draw-item label {
-      cursor: pointer;
-      user-select: none;
-    }
-    footer.ticker {
+    .ticker {
       position: fixed;
       bottom: 0;
       width: 100%;
@@ -73,14 +50,28 @@
       white-space: nowrap;
       overflow: hidden;
     }
-    footer.ticker span {
+    .ticker span {
       display: inline-block;
       padding-left: 100%;
       animation: scroll 10s linear infinite;
     }
+    .burn-section, .draw-list {
+      margin: 20px;
+    }
+    .draw-item {
+      margin: 10px 0;
+      padding: 10px;
+      border: 1px solid #333;
+      display: inline-block;
+      animation: fadeIn 1s ease-in-out;
+    }
     @keyframes scroll {
       0% { transform: translateX(0); }
       100% { transform: translateX(-100%); }
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(10px); }
+      100% { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
@@ -92,23 +83,20 @@
       <a href="live">View Live Draws</a>
       <a href="how">How It Works</a>
       <span id="connectButton">Connect Wallet</span>
-      <span id="refreshBalance" title="Refresh Fee Balance" style="margin-left:20px;">🔄 Refresh Balance</span>
     </nav>
   </header>
 
   <main>
     <h1>Live Draws</h1>
-    <p id="nextDraw">Next draw in: --:--</p>
 
-    <div id="feeBalance">Fee Wallet Balance: Loading...</div>
+    <section class="burn-section">
+      <p>Total Burned: <span id="totalBurned">0</span> SOL</p>
+      <input id="burnAmount" type="number" placeholder="Amount burned (SOL)" step="0.01"/>
+      <button onclick="addBurnAmount()">Add</button>
+      <button onclick="refreshDraws()">Refresh</button>
+    </section>
 
-    <div class="draw-list" id="drawList">
-      <!-- Draws will be dynamically inserted here -->
-    </div>
-
-    <div>
-      <strong>Total Burned Amount: </strong><span id="totalBurned">0</span> SOL
-    </div>
+    <section class="draw-list" id="drawList"></section>
 
     <a class="back-home" href="home">← Back to Home</a>
     <p id="walletAddress"></p>
@@ -118,136 +106,114 @@
     <span>Contract address coming soon</span>
   </footer>
 
-<script>
-  const connectButton = document.getElementById("connectButton");
-  const walletAddress = document.getElementById("walletAddress");
-  const feeBalanceEl = document.getElementById("feeBalance");
-  const refreshBalanceBtn = document.getElementById("refreshBalance");
-  const drawListEl = document.getElementById("drawList");
-  const totalBurnedEl = document.getElementById("totalBurned");
-  const nextDrawEl = document.getElementById("nextDraw");
+  <script>
+    let draws = [];
+    let totalBurned = 0;
+    const ownerWallet = "HjMofG9RnWtCDrSP4PDc2xxpBGBtGjZg1KxtTzLSucqu";
+    let connectedWallet = null;
+    const drawListEl = document.getElementById("drawList");
 
-  // Your dev wallet to authorize burn toggling
-  const ownerWallet = "HjMofG9RnWtCDrSP4PDc2xxpBGBtGjZg1KxtTzLSucqu";
-
-  let connectedWallet = null;
-  let draws = [];
-  let burnedDrawIds = new Set();
-  let totalBurned = 0;
-
-  // Example draws every 30 mins starting at 00:00, 00:30, etc.
-  function generateDraws() {
-    draws = [];
-    for(let i = 0; i < 10; i++) {
-      const hour = Math.floor(i / 2);
-      const minute = (i % 2) * 30;
-      const label = `${hour.toString().padStart(2,'0')}:${minute.toString().padStart(2,'0')}`;
-      draws.push({id: i, label, burned: false});
-    }
-  }
-
-  function renderDraws() {
-    drawListEl.innerHTML = "";
-    draws.forEach(draw => {
-      const div = document.createElement("div");
-      div.className = "draw-item";
-
-      const labelSpan = document.createElement("span");
-      labelSpan.textContent = `Draw at ${draw.label}`;
-
-      div.appendChild(labelSpan);
-
-      if(connectedWallet === ownerWallet) {
-        const label = document.createElement("label");
-        label.innerText = "Mark as Burned ";
-
-        const checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.checked = draw.burned;
-        checkbox.addEventListener("change", (e) => {
-          draw.burned = e.target.checked;
-          updateBurnTotal();
-        });
-
-        label.prepend(checkbox);
-        div.appendChild(label);
+    function generateDraws() {
+      draws = [];
+      for(let i = 0; i < 10; i++) {
+        const hour = Math.floor(i / 2);
+        const minute = (i % 2) * 30;
+        const label = `${hour.toString().padStart(2,'0')}:${minute.toString().padStart(2,'0')}`;
+        draws.push({ id: i, label, burned: false, txid: "" });
       }
-
-      drawListEl.appendChild(div);
-    });
-  }
-
-  function updateBurnTotal() {
-    totalBurned = draws.reduce((acc, d) => acc + (d.burned ? 1 : 0), 0) * 1; // Each burned draw adds 1 SOL, update multiplier as needed
-    totalBurnedEl.textContent = totalBurned.toFixed(2);
-  }
-
-  async function fetchFeeWalletBalance() {
-    feeBalanceEl.textContent = "Fee Wallet Balance: Loading...";
-    try {
-      // Replace with your actual fee wallet address
-      const feeWalletAddress = "8rvAsDKeAcEjEkiZMug9k8v1y8mW6gQQiMobd89Uy7qR";
-
-      // Solana JSON RPC call via public endpoint
-      const response = await fetch("https://api.mainnet-beta.solana.com", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-          jsonrpc: "2.0",
-          id: 1,
-          method: "getBalance",
-          params: [feeWalletAddress]
-        })
-      });
-      const data = await response.json();
-      if(data.result) {
-        const lamports = data.result.value;
-        const sol = lamports / 1e9;
-        feeBalanceEl.textContent = `Fee Wallet Balance: ${sol.toFixed(4)} SOL`;
-      } else {
-        feeBalanceEl.textContent = "Fee Wallet Balance: Error fetching";
-      }
-    } catch(err) {
-      feeBalanceEl.textContent = "Fee Wallet Balance: Error fetching";
-      console.error("Fee balance fetch error:", err);
     }
-  }
 
-  function updateNextDrawCountdown() {
-    const now = new Date();
-    // Calculate minutes past the hour and next 30 min mark
-    const mins = now.getMinutes();
-    const secs = now.getSeconds();
-    let nextMinutes = mins < 30 ? 30 : 60;
-    let diffMinutes = nextMinutes - mins - 1;
-    let diffSeconds = 60 - secs;
-    if(diffMinutes < 0) diffMinutes = 0;
+    function renderDraws() {
+      drawListEl.innerHTML = "";
+      let i = 0;
+      function showNext() {
+        if (i >= draws.length) return;
+        const draw = draws[i];
+        const div = document.createElement("div");
+        div.className = "draw-item";
 
-    nextDrawEl.textContent = `Next draw in: ${diffMinutes.toString().padStart(2,'0')}:${diffSeconds.toString().padStart(2,'0')}`;
-  }
+        const labelSpan = document.createElement("span");
+        labelSpan.textContent = `Draw at ${draw.label} `;
+        div.appendChild(labelSpan);
 
-  async function connectWallet() {
-    try {
-      const resp = await window.solana.connect();
-      connectedWallet = resp.publicKey.toString();
-      walletAddress.textContent = "Connected: " + connectedWallet.slice(0,4) + "..." + connectedWallet.slice(-4);
+        if(draw.txid) {
+          const link = document.createElement("a");
+          link.href = `https://solscan.io/tx/${draw.txid}`;
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
+          link.textContent = "View TX";
+          link.style.color = "#0ff";
+          link.style.marginLeft = "10px";
+          div.appendChild(link);
+        }
 
-      // Re-render draws with or without checkbox depending on wallet
+        if(connectedWallet === ownerWallet) {
+          const label = document.createElement("label");
+          label.innerText = "Mark as Burned ";
+
+          const checkbox = document.createElement("input");
+          checkbox.type = "checkbox";
+          checkbox.checked = draw.burned;
+          checkbox.addEventListener("change", (e) => {
+            draw.burned = e.target.checked;
+            updateBurnTotal();
+          });
+
+          label.prepend(checkbox);
+          div.appendChild(label);
+        }
+
+        drawListEl.appendChild(div);
+        i++;
+        setTimeout(showNext, 300);
+      }
+      showNext();
+    }
+
+    function updateBurnTotal() {
+      const burnedAmount = draws.filter(d => d.burned).length * 1;
+      totalBurned = manualBurn + burnedAmount;
+      document.getElementById("totalBurned").textContent = totalBurned.toFixed(2);
+    }
+
+    let manualBurn = 0;
+
+    function addBurnAmount() {
+      const input = document.getElementById("burnAmount");
+      const val = parseFloat(input.value);
+      if (!isNaN(val)) {
+        manualBurn += val;
+        updateBurnTotal();
+        input.value = "";
+      }
+    }
+
+    function refreshDraws() {
+      generateDraws();
       renderDraws();
-    } catch(err) {
-      console.error("Wallet connection error:", err);
     }
-  }
 
-  connectButton.addEventListener("click", connectWallet);
-  refreshBalanceBtn.addEventListener("click", fetchFeeWalletBalance);
+    const connectButton = document.getElementById("connectButton");
+    const walletAddress = document.getElementById("walletAddress");
 
-  // Init
-  generateDraws();
-  renderDraws();
-  fetchFeeWalletBalance();
-  updateNextDrawCountdown();
-  setInterval(updateNextDrawCountdown, 1000);
-</script>
+    async function connectWallet() {
+      try {
+        const resp = await window.solana.connect();
+        const pubKey = resp.publicKey.toString();
+        connectedWallet = pubKey;
+        walletAddress.textContent = "Connected: " + pubKey.slice(0, 4) + "..." + pubKey.slice(-4);
+        renderDraws();
+      } catch (err) {
+        console.error("Wallet connection error:", err);
+      }
+    }
+
+    connectButton.addEventListener("click", connectWallet);
+    window.solana?.on("connect", () => console.log("Wallet connected!"));
+
+    // Initial setup
+    generateDraws();
+    renderDraws();
+  </script>
 </body>
 </html>
