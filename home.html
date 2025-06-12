@@ -61,10 +61,9 @@
       100% { transform: translateX(-100%); }
     }
 
-    /* Twitter X Button */
     #twitter-btn {
       position: fixed;
-      top: 20px;
+      bottom: 60px;
       right: 20px;
       background-color: #000;
       border: 2px solid #0ff;
@@ -86,6 +85,21 @@
     #twitter-btn svg {
       display: block;
     }
+
+    #burnEffect {
+      display: none;
+      color: red;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    #tx-log {
+      list-style: none;
+      padding: 0;
+      margin-top: 20px;
+      font-size: 14px;
+      color: #0f0;
+    }
   </style>
 </head>
 <body>
@@ -103,14 +117,28 @@
     <h1>🎟 Welcome to LOTTY</h1>
     <p>Connect your wallet to participate in the next on-chain drawing.</p>
     <p id="walletAddress"></p>
+
+    <div id="burnEffect">🔥 Pot Burned</div>
+
+    <ul id="tx-log">
+      <li>💸 0.1 SOL → Dev Wallet</li>
+      <li>🔥 Pot Burned</li>
+    </ul>
+
+    <button onclick="toggleHowItWorks()">How It Works</button>
+    <div id="howItWorks" style="display:none; margin-top: 15px;">
+      <p>🎟 Hold $LOTTY to participate.</p>
+      <p>🕒 Every 30 minutes, one wallet is randomly selected.</p>
+      <p>⚠️ If not claimed before the next drawing cycle, the pot is burned.</p>
+      <p>🧬 100% on-chain. No middlemen. No ticket needed.</p>
+    </div>
   </main>
 
   <footer class="ticker">
     <span>Contract address coming soon</span>
   </footer>
 
-  <!-- Twitter "X" Button -->
-  <a href="https://twitter.com/lottyonsol" target="_blank" id="twitter-btn" aria-label="Twitter">
+  <a href="https://twitter.com/YOUR_HANDLE" target="_blank" id="twitter-btn" aria-label="Twitter">
     <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28">
       <path d="M14.64 10.79L22.38 2h-2.05l-6.45 7.35L8.24 2H2.25l8.19 11.56L2.25 22h2.05l6.89-7.85L15.76 22h5.99l-8.11-11.21z"/>
     </svg>
@@ -135,6 +163,11 @@
     window.solana?.on("connect", () => {
       console.log("Wallet connected!");
     });
+
+    function toggleHowItWorks() {
+      const section = document.getElementById("howItWorks");
+      section.style.display = section.style.display === "none" ? "block" : "none";
+    }
   </script>
 </body>
 </html>
