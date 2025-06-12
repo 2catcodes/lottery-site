@@ -85,21 +85,6 @@
     #twitter-btn svg {
       display: block;
     }
-
-    #burnEffect {
-      display: none;
-      color: red;
-      font-weight: bold;
-      margin-top: 10px;
-    }
-
-    #tx-log {
-      list-style: none;
-      padding: 0;
-      margin-top: 20px;
-      font-size: 14px;
-      color: #0f0;
-    }
   </style>
 </head>
 <body>
@@ -117,21 +102,6 @@
     <h1>🎟 Welcome to LOTTY</h1>
     <p>Connect your wallet to participate in the next on-chain drawing.</p>
     <p id="walletAddress"></p>
-
-    <div id="burnEffect">🔥 Pot Burned</div>
-
-    <ul id="tx-log">
-      <li>💸 0.1 SOL → Dev Wallet</li>
-      <li>🔥 Pot Burned</li>
-    </ul>
-
-    <button onclick="toggleHowItWorks()">How It Works</button>
-    <div id="howItWorks" style="display:none; margin-top: 15px;">
-      <p>🎟 Hold $LOTTY to participate.</p>
-      <p>🕒 Every 30 minutes, one wallet is randomly selected.</p>
-      <p>⚠️ If not claimed before the next drawing cycle, the pot is burned.</p>
-      <p>🧬 100% on-chain. No middlemen. No ticket needed.</p>
-    </div>
   </main>
 
   <footer class="ticker">
@@ -163,11 +133,6 @@
     window.solana?.on("connect", () => {
       console.log("Wallet connected!");
     });
-
-    function toggleHowItWorks() {
-      const section = document.getElementById("howItWorks");
-      section.style.display = section.style.display === "none" ? "block" : "none";
-    }
   </script>
 </body>
 </html>
