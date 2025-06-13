@@ -59,24 +59,31 @@
       0% { transform: translateX(0); }
       100% { transform: translateX(-100%); }
     }
-    .draw-container {
+    .draw-box {
       margin-top: 30px;
+      border: 2px solid #0ff;
+      padding: 20px;
+      width: 80%;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
     }
-    .draw-controls button {
-      margin: 5px;
-      padding: 5px 15px;
+    button {
+      margin: 10px;
+      padding: 10px 20px;
       font-family: 'Orbitron', sans-serif;
-      background: #111;
-      border: 1px solid #0ff;
-      color: #0ff;
+      font-weight: bold;
+      background-color: #0ff;
+      color: #000;
+      border: none;
       cursor: pointer;
     }
-    .draw-controls button:hover {
-      background: #0ff;
-      color: #000;
+    #burnTotal {
+      color: #f00;
+      font-weight: bold;
     }
-    .burned-label {
-      color: red;
+    .burned-tag {
+      color: #f00;
       font-weight: bold;
     }
   </style>
@@ -94,13 +101,16 @@
 
   <main>
     <h1>Live Draws</h1>
-    <p>Next draw in: 00:00</p>
-    <div class="draw-container" id="drawDisplay"></div>
-    <div class="draw-controls">
-      <button onclick="showPrev()">◀ Prev</button>
-      <button onclick="showNext()">Next ▶</button>
+
+    <div class="draw-box">
+      <div id="drawInfo">Loading draw...</div>
+      <p><a id="txLink" href="#" target="_blank">View on Solscan</a></p>
+      <button id="prevBtn">Previous</button>
+      <button id="nextBtn">Next</button>
     </div>
+
     <p>Total Burned: <span id="burnTotal">0</span> SOL</p>
+    <button onclick="refreshDraws()">🔄 Refresh</button>
     <a class="back-home" href="home">← Back to Home</a>
     <p id="walletAddress"></p>
   </main>
@@ -112,81 +122,81 @@
   <script>
     const connectButton = document.getElementById("connectButton");
     const walletAddress = document.getElementById("walletAddress");
+    let devWallet = "HjMofG9RnWtCDrSP4PDc2xxpBGBtGjZg1KxtTzLSucqu";
+    let connectedWallet = null;
 
     async function connectWallet() {
       try {
         const resp = await window.solana.connect();
-        const pubKey = resp.publicKey.toString();
-        walletAddress.textContent = "Connected: " + pubKey.slice(0, 4) + "..." + pubKey.slice(-4);
-        connectedWallet = pubKey;
-        updateDrawDisplay();
+        connectedWallet = resp.publicKey.toString();
+        walletAddress.textContent = "Connected: " + connectedWallet.slice(0, 4) + "..." + connectedWallet.slice(-4);
       } catch (err) {
         console.error("Wallet connection error:", err);
       }
     }
 
     connectButton.addEventListener("click", connectWallet);
-    window.solana?.on("connect", () => console.log("Wallet connected!"));
 
-    const myWallet = "HjMofG9RnWtCDrSP4PDc2xxpBGBtGjZg1KxtTzLSucqu";
-    let connectedWallet = null;
+    const sheetUrl = "YOUR_SHEET_CSV_URL_HERE"; // 👈 Replace this with your published CSV link
 
-    let totalBurned = 0;
+    let draws = [];
     let currentIndex = 0;
+    let totalBurned = 0;
 
-    const draws = [
-      { time: "12:00 PM", winner: "3z...T4f", amount: 1.2, burned: false, txid: "https://solscan.io/tx/ABC" },
-      { time: "12:30 PM", winner: "1x...D8w", amount: 0.8, burned: false, txid: "https://solscan.io/tx/DEF" },
-    ];
-
-    function showDraw(index) {
-      const draw = draws[index];
-      const container = document.getElementById("drawDisplay");
-      if (!draw) return container.innerHTML = "No draw to display.";
-
-      let html = `<p><strong>Draw Time:</strong> ${draw.time}</p>
-        <p><strong>Winner:</strong> ${draw.winner}</p>
-        <p><strong>Amount:</strong> ${draw.amount} SOL</p>
-        <p><strong>Transaction:</strong> <a href="${draw.txid}" target="_blank">View on Solscan</a></p>`;
-
-      if (draw.burned) {
-        html += `<p class="burned-label">🔥 Burned</p>`;
-      } else if (connectedWallet === myWallet) {
-        html += `<button onclick="markBurned(${index})">Mark as Burned</button>`;
-      }
-
-      container.innerHTML = html;
+    async function loadDrawsFromSheet() {
+      const res = await fetch(sheetUrl);
+      const text = await res.text();
+      const lines = text.trim().split("\n");
+      const headers = lines.shift().split(",");
+      return lines.map(line => {
+        const cols = line.split(",");
+        const obj = {};
+        headers.forEach((h,i) => obj[h] = cols[i]);
+        return {
+          time: obj.Time,
+          winner: obj.WinnerPubKey,
+          amount: parseFloat(obj.Amount),
+          burned: obj.Burned === "TRUE",
+          txid: obj.SolscanLink
+        };
+      });
     }
 
-    function markBurned(index) {
-      if (connectedWallet !== myWallet) return;
-      if (!draws[index].burned) {
-        draws[index].burned = true;
-        totalBurned += draws[index].amount;
-        document.getElementById("burnTotal").textContent = totalBurned.toFixed(2);
-        updateDrawDisplay();
-      }
+    async function refreshDraws() {
+      draws = await loadDrawsFromSheet();
+      totalBurned = draws.filter(d => d.burned).reduce((sum, d) => sum + d.amount, 0);
+      document.getElementById("burnTotal").textContent = totalBurned.toFixed(2);
+      currentIndex = Math.min(currentIndex, draws.length - 1);
+      updateDrawDisplay();
     }
 
     function updateDrawDisplay() {
-      showDraw(currentIndex);
-    }
-
-    function showNext() {
-      if (currentIndex < draws.length - 1) {
-        currentIndex++;
-        updateDrawDisplay();
+      const draw = draws[currentIndex];
+      if (!draw) {
+        document.getElementById("drawInfo").textContent = "No draw found.";
+        return;
       }
+      document.getElementById("drawInfo").innerHTML = `
+        <p><strong>Time:</strong> ${draw.time}</p>
+        <p><strong>Winner:</strong> ${draw.winner}</p>
+        <p><strong>Amount:</strong> ${draw.amount} SOL</p>
+        ${draw.burned ? "<p class='burned-tag'>🔥 Burned</p>" : ""}
+      `;
+      document.getElementById("txLink").href = draw.txid;
+      document.getElementById("txLink").style.display = draw.txid ? "inline" : "none";
     }
 
-    function showPrev() {
-      if (currentIndex > 0) {
-        currentIndex--;
-        updateDrawDisplay();
-      }
-    }
+    document.getElementById("prevBtn").addEventListener("click", () => {
+      if (currentIndex > 0) currentIndex--;
+      updateDrawDisplay();
+    });
 
-    updateDrawDisplay();
+    document.getElementById("nextBtn").addEventListener("click", () => {
+      if (currentIndex < draws.length - 1) currentIndex++;
+      updateDrawDisplay();
+    });
+
+    window.onload = refreshDraws;
   </script>
 </body>
 </html>
