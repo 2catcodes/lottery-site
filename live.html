@@ -86,14 +86,9 @@
       color: #f00;
       font-weight: bold;
     }
-    /* NEW purple neon color for View on Solscan */
     #txLink {
-      color: #9b59b6;
+      color: #d46fff; /* Neon purple */
       font-weight: bold;
-      text-decoration: none;
-    }
-    #txLink:hover {
-      text-decoration: underline;
     }
   </style>
 </head>
@@ -146,7 +141,7 @@
 
     connectButton.addEventListener("click", connectWallet);
 
-    const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQpF3PYFo_sMHqpcVfx-L1EpqMcT6dksTGS6ZYGwxfePUYbOyJrtm0aGQIWuZKSlW9ocJ2zMOhzkLZE/pub?output=csv"; // 👈 Replace this with your published CSV link
+    const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQpF3PYFo_sMHqpcVfx-L1EpqMcT6dksTGS6ZYGwxfePUYbOyJrtm0aGQIWuZKSlW9ocJ2zMOhzkLZE/pub?output=csv";
 
     let draws = [];
     let currentIndex = 0;
@@ -206,6 +201,9 @@
     });
 
     window.onload = refreshDraws;
+
+    // 🔄 Auto-refresh every 30 minutes
+    setInterval(refreshDraws, 1800000);
   </script>
 </body>
 </html>
