@@ -87,9 +87,31 @@
     }
 
     #countdown {
-      font-size: 24px;
+      font-size: 36px;
+      margin: 30px 0;
       color: #0ff;
-      margin-top: 20px;
+    }
+
+    .pulse {
+      animation: pulse 1s infinite;
+      color: #f0f;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.2); opacity: 0.5; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    #startBtn {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #0ff;
+      color: #000;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -107,7 +129,8 @@
   <main>
     <h1>🎟 Welcome to LOTTY</h1>
     <p>Connect your wallet to participate in the next on-chain drawing.</p>
-    <div id="countdown">Next Draw In: --:--</div>
+    <div id="countdown">00:00</div>
+    <button id="startBtn">Start Draw Cycle</button>
     <p id="walletAddress"></p>
   </main>
 
@@ -141,19 +164,35 @@
       console.log("Wallet connected!");
     });
 
-    function updateCountdown() {
-      const now = new Date();
-      const minutes = now.getMinutes();
-      const seconds = now.getSeconds();
-      const nextInterval = minutes < 30 ? 30 : 60;
-      const minutesLeft = nextInterval - minutes - 1;
-      const secondsLeft = 59 - seconds;
-      const display = `${String(minutesLeft).padStart(2, '0')}:${String(secondsLeft).padStart(2, '0')}`;
-      document.getElementById("countdown").textContent = "Next Draw In: " + display;
+    // Countdown logic
+    let timerInterval;
+    const countdownEl = document.getElementById("countdown");
+    const startBtn = document.getElementById("startBtn");
+
+    function startCountdown() {
+      let totalSeconds = 1800; // 30 minutes
+      if (timerInterval) clearInterval(timerInterval);
+
+      timerInterval = setInterval(() => {
+        let minutes = Math.floor(totalSeconds / 60);
+        let seconds = totalSeconds % 60;
+        countdownEl.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+        if (totalSeconds <= 5) {
+          countdownEl.classList.add("pulse");
+        } else {
+          countdownEl.classList.remove("pulse");
+        }
+
+        if (totalSeconds <= 0) {
+          totalSeconds = 1800; // restart automatically
+        } else {
+          totalSeconds--;
+        }
+      }, 1000);
     }
 
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
+    startBtn.addEventListener("click", startCountdown);
   </script>
 </body>
 </html>
