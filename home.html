@@ -85,6 +85,12 @@
     #twitter-btn svg {
       display: block;
     }
+
+    #countdown {
+      font-size: 24px;
+      color: #0ff;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
@@ -101,6 +107,7 @@
   <main>
     <h1>🎟 Welcome to LOTTY</h1>
     <p>Connect your wallet to participate in the next on-chain drawing.</p>
+    <div id="countdown">Next Draw In: --:--</div>
     <p id="walletAddress"></p>
   </main>
 
@@ -133,6 +140,20 @@
     window.solana?.on("connect", () => {
       console.log("Wallet connected!");
     });
+
+    function updateCountdown() {
+      const now = new Date();
+      const minutes = now.getMinutes();
+      const seconds = now.getSeconds();
+      const nextInterval = minutes < 30 ? 30 : 60;
+      const minutesLeft = nextInterval - minutes - 1;
+      const secondsLeft = 59 - seconds;
+      const display = `${String(minutesLeft).padStart(2, '0')}:${String(secondsLeft).padStart(2, '0')}`;
+      document.getElementById("countdown").textContent = "Next Draw In: " + display;
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
   </script>
 </body>
 </html>
