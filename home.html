@@ -56,28 +56,34 @@
       animation: scroll 10s linear infinite;
     }
 
-    #timer {
-      font-size: 48px;
-      font-weight: bold;
-      margin-top: 40px;
-      color: #0ff;
-      transition: all 0.3s ease-in-out;
-    }
-
-    .pulse {
-      animation: pulse 1s infinite;
-      color: #ff0;
-    }
-
     @keyframes scroll {
       0% { transform: translateX(0); }
       100% { transform: translateX(-100%); }
     }
 
-    @keyframes pulse {
-      0% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.1); opacity: 0.6; }
-      100% { transform: scale(1); opacity: 1; }
+    #twitter-btn {
+      position: fixed;
+      bottom: 60px;
+      right: 20px;
+      background-color: #000;
+      border: 2px solid #0ff;
+      border-radius: 50%;
+      padding: 10px;
+      color: #0ff;
+      text-decoration: none;
+      box-shadow: 0 0 12px #0ff66c44;
+      z-index: 999;
+      transition: transform 0.2s ease;
+    }
+
+    #twitter-btn:hover {
+      transform: scale(1.1);
+      background-color: #0ff;
+      color: #000;
+    }
+
+    #twitter-btn svg {
+      display: block;
     }
   </style>
 </head>
@@ -96,12 +102,17 @@
     <h1>🎟 Welcome to LOTTY</h1>
     <p>Connect your wallet to participate in the next on-chain drawing.</p>
     <p id="walletAddress"></p>
-    <div id="timer">00:00</div>
   </main>
 
   <footer class="ticker">
     <span>Contract address coming soon</span>
   </footer>
+
+  <a href="https://twitter.com/lottyonsol" target="_blank" id="twitter-btn" aria-label="Twitter">
+    <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28">
+      <path d="M14.64 10.79L22.38 2h-2.05l-6.45 7.35L8.24 2H2.25l8.19 11.56L2.25 22h2.05l6.89-7.85L15.76 22h5.99l-8.11-11.21z"/>
+    </svg>
+  </a>
 
   <script>
     const connectButton = document.getElementById("connectButton");
@@ -122,41 +133,6 @@
     window.solana?.on("connect", () => {
       console.log("Wallet connected!");
     });
-
-    // === TOGGLE THIS FLAG TO START/STOP COUNTDOWN ===
-    const countdownActive = false; // Set to true when ready
-    // =================================================
-
-    const timerDisplay = document.getElementById("timer");
-
-    let interval;
-    function startCountdown() {
-      let timeLeft = 30 * 60;
-
-      interval = setInterval(() => {
-        let minutes = Math.floor(timeLeft / 60);
-        let seconds = timeLeft % 60;
-
-        timerDisplay.textContent = 
-          `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-
-        if (timeLeft <= 5) {
-          timerDisplay.classList.add("pulse");
-        } else {
-          timerDisplay.classList.remove("pulse");
-        }
-
-        if (timeLeft <= 0) {
-          timeLeft = 30 * 60; // restart
-        } else {
-          timeLeft--;
-        }
-      }, 1000);
-    }
-
-    if (countdownActive) {
-      startCountdown();
-    }
   </script>
 </body>
 </html>
